@@ -199,7 +199,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-09-12 12:11:25 / 修改时间：16:47:05" itemprop="dateCreated datePublished" datetime="2021-09-12T12:11:25+08:00">2021-09-12</time>
+      <time title="创建时间：2021-09-12 12:11:25 / 修改时间：17:24:25" itemprop="dateCreated datePublished" datetime="2021-09-12T12:11:25+08:00">2021-09-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -271,7 +271,20 @@
     </div>
 </div></li>
 </ul>
-<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+<h2 id="1-4-书中List类源码分析"><a href="#1-4-书中List类源码分析" class="headerlink" title="1.4 书中List类源码分析"></a>1.4 书中List类源码分析</h2><div class='spoiler collapsed'>
+    <div class='spoiler-title'>
+        源码分析
+    </div>
+    <div class='spoiler-content'>
+        <h3 id="1-4-1-iterator类的operator"><a href="#1-4-1-iterator类的operator" class="headerlink" title="1.4.1 iterator类的operator++"></a>1.4.1 iterator类的operator++</h3><p>由于<code>iter++</code>和<code>++iter</code>的语义不同，C++做了如下规定：  </p>
+<ul>
+<li>对于前缀形式<code>++iter</code>，调用<strong>零参数</strong>的<code>operator++ ()</code>;</li>
+<li>对于后缀形式<code>iter++</code>，调用<strong>匿名单参数</strong>的<code>operator++ (int)</code>。  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">iterator&amp; <span class="keyword">operator</span>++ () &#123;</span><br><span class="line">    <span class="comment">// 相当于先++再返回</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;current = <span class="keyword">this</span>-&gt;current-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">iterator&amp; <span class="keyword">operator</span>++ (<span class="keyword">int</span>) &#123;</span><br><span class="line">    <span class="comment">// 相当于返回的是++之前的</span></span><br><span class="line">    iterator old = *<span class="keyword">this</span>;</span><br><span class="line">    ++(*<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">return</span> old;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-4-2-iterator"><a href="#1-4-2-iterator" class="headerlink" title="1.4.2 iterator"></a>1.4.2 iterator</h3>通过类iterator/const_iterator对位置进行抽象，类中有一个成员变量<code>Node* current</code>记录当前位置。</li>
+</ul>
+
+    </div>
+</div><link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
       
     </div>
 
